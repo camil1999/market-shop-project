@@ -24,6 +24,7 @@
 7. Test endpoints you are interested in
 
 #Endpoint
+<ul>
 <li> Main url-http://localhost:7777/marketshop </li>
 - POST http://localhost:7777/marketshop/user/login for login users
 - POST http://localhost:7777/marketshop/user/signUp for registration
@@ -46,3 +47,4 @@
 - GET http://localhost:7777/marketshop/sale/date/ for get sales by date
 - POST http://localhost:7777/marketshop/sale/ for save sale
 - Swagger url: http://localhost:7777/marketshop/swagger-ui.html#/
+</ul>
