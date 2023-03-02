@@ -4,6 +4,10 @@
 - Spring Security
 - Swagger
 - Lombok
+- H2
 - MySql
+- Model Mapper
+- DevTools
+- Validation
 
 
