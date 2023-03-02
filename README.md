@@ -11,3 +11,5 @@
 - Validation
 
 # Requirement for running
+- Postman - for testing project
+- Eclipse IDE - for opening project and checking code
