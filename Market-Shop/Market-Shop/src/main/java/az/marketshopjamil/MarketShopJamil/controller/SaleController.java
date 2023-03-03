@@ -22,7 +22,7 @@ import az.marketshopjamil.MarketShopJamil.response.ResponseSale;
 import az.marketshopjamil.MarketShopJamil.service.SaleService;
 
 @RestController
-@RequestMapping(path = "/sales")
+@RequestMapping(path = "/sale")
 @CrossOrigin(origins = "*")
 public class SaleController {
 

@@ -2,15 +2,14 @@ package az.marketshopjamil.MarketShopJamil.controller;
 
 import java.util.List;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,33 +18,36 @@ import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
-import az.marketshopjamil.MarketShopJamil.exception.MyValidationException;
-import az.marketshopjamil.MarketShopJamil.request.RequestUser;
-import az.marketshopjamil.MarketShopJamil.response.ResponseUser;
-import az.marketshopjamil.MarketShopJamil.service.UserService;
+import az.marketshopjamil.MarketShopJamil.request.RequestAdmin;
+import az.marketshopjamil.MarketShopJamil.response.ResponseAdmin;
+import az.marketshopjamil.MarketShopJamil.service.AdminService;
 
 @RestController
-@RequestMapping(path = "/users")
+@RequestMapping(path = "/admin")
 @CrossOrigin(origins = "*")
-public class UserController {
+public class AdminController {
 
 	@Autowired
-	private UserService userService;
-
-	@PostMapping
-	@PreAuthorize(value = "hasAuthority('Admin')")
-	public void saveUser(@Valid @RequestBody RequestUser requestUser,BindingResult result) {
-		if (result.hasErrors()) {
-			throw new MyValidationException(result);
-		}
-		userService.saveUser(requestUser);
-	}
+	private AdminService adminService;
 
 	@GetMapping
 	@PreAuthorize(value = "hasAuthority('Admin')")
-	public MappingJacksonValue findAllUser() {
-		List<ResponseUser> users = userService.findAllUser();
-		return filter(users, "user", "username", "password", "enabled", "type");
+	public MappingJacksonValue findAllAdmin() {
+		List<ResponseAdmin> admins = adminService.findAllAdmin();
+		return filter(admins, "admin", "id", "name", "surname", "email", "phone");
+
+	}
+
+	@PutMapping(path = "/{id}")
+	@PreAuthorize(value = "hasAuthority('Admin')")
+	public void editAdmin(@PathVariable Integer id, @RequestBody RequestAdmin requestAdmin) {
+		adminService.editAdmin(id, requestAdmin);
+	}
+
+	@DeleteMapping(path = "/{id}")
+	@PreAuthorize(value = "hasAuthority('Admin')")
+	public void deleteById(@PathVariable Integer id) {
+		adminService.deleteById(id);
 	}
 
 	public MappingJacksonValue filter(Object data, String dto, String... fields) {
@@ -56,8 +58,4 @@ public class UserController {
 		return value;
 	}
 
-	@GetMapping(path = "/login")
-	public void login() {
-
-	}
 }

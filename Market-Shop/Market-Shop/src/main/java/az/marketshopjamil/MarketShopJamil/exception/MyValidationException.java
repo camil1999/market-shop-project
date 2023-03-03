@@ -3,6 +3,7 @@ package az.marketshopjamil.MarketShopJamil.exception;
 import org.springframework.validation.BindingResult;
 
 import lombok.Getter;
+
 @Getter
 public class MyValidationException extends RuntimeException {
 

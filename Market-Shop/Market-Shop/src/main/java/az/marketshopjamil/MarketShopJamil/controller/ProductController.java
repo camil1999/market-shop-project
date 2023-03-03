@@ -29,7 +29,7 @@ import az.marketshopjamil.MarketShopJamil.response.ResponseProduct;
 import az.marketshopjamil.MarketShopJamil.service.ProductService;
 
 @RestController
-@RequestMapping(path = "/products")
+@RequestMapping(path = "/product")
 @CrossOrigin(origins = "*")
 public class ProductController {
 

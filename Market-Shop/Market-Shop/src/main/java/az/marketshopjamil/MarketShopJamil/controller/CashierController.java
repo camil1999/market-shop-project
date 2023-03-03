@@ -23,7 +23,7 @@ import az.marketshopjamil.MarketShopJamil.response.ResponseCashier;
 import az.marketshopjamil.MarketShopJamil.service.CashierService;
 
 @RestController
-@RequestMapping(path = "/cashiers")
+@RequestMapping(path = "/cashier")
 @CrossOrigin(origins = "*")
 public class CashierController {
 
