@@ -26,25 +26,25 @@
 <h1>Endpoint</h1>
 <ul>
 <li> Main url-http://localhost:7777/marketshop </li>
-<li> POST http://localhost:7777/marketshop/user/login for login users </li>
-<li> POST http://localhost:7777/marketshop/user/signUp for registration </li>
-<li> GET http://localhost:7777/marketshop/user/ for get all users </li>
-<li> GET http://localhost:7777/marketshop/admin/ for get all admins </li>
-<li> PUT http://localhost:7777/marketshop/admin/{id} for update a admin </li>
-<li> DELETE http://localhost:7777/marketshop/admin/{id} for delete a admin </li>
-<li> GET http://localhost:7777/marketshop/cashier/ for get all cashiers </li>
-<li> PUT http://localhost:7777/marketshop/cashier/{id} for update a cashier </li>
-<li> DELETE http://localhost:7777/marketshop/cashier/{id} for delete a cashier </li>
-<li> GET http://localhost:7777/marketshop/product/barcode for get all products by barcode </li>
-<li> POST http://localhost:7777/marketshop/product/ for save a product </li> 
-<li> POST http://localhost:7777/marketshop/product/incoming for save a incoming product </li>
-<li> DELETE http://localhost:7777/marketshop/product/ for delete a product </li>
-<li> PUT http://localhost:7777/marketshop/product/{id}/ for update a product </li>
-<li> GET http://localhost:7777/marketshop/product/search/ for search a product </li>
-<li> GET http://localhost:7777/marketshop/report/total-report/ for get total report </li>
-<li> GET http://localhost:7777/marketshop/report/by-date/ for get report by date </li>
-<li> GET http://localhost:7777/marketshop/sale/ for get all sales </li>
-<li> GET http://localhost:7777/marketshop/sale/date/ for get sales by date </li>
-<li> POST http://localhost:7777/marketshop/sale/ for save sale </li>
-<li> Swagger url: http://localhost:7777/marketshop/swagger-ui.html#/ </li>
+<li> POST <code>http://localhost:7777/marketshop/user/login</code> for login users </li>
+<li> POST <code>http://localhost:7777/marketshop/user/signUp</code> for registration </li>
+<li> GET <code>http://localhost:7777/marketshop/user/</code> for get all users </li>
+<li> GET <code>http://localhost:7777/marketshop/admin/</code> for get all admins </li>
+<li> PUT <code>http://localhost:7777/marketshop/admin/{id}/</code> for update a admin </li>
+<li> DELETE <code>http://localhost:7777/marketshop/admin/{id}/</code> for delete a admin </li>
+<li> GET <code>http://localhost:7777/marketshop/cashier/</code> for get all cashiers </li>
+<li> PUT <code>http://localhost:7777/marketshop/cashier/{id}/</code> for update a cashier </li>
+<li> DELETE <code>http://localhost:7777/marketshop/cashier/{id}/</code> for delete a cashier </li>
+<li> GET <code>http://localhost:7777/marketshop/product/barcode/</code> for get all products by barcode </li>
+<li> POST <code>http://localhost:7777/marketshop/product/</code> for save a product </li> 
+<li> POST <code>http://localhost:7777/marketshop/product/incoming/</code> for save a incoming product </li>
+<li> DELETE <code>http://localhost:7777/marketshop/product/</code> for delete a product </li>
+<li> PUT <code>http://localhost:7777/marketshop/product/{id}/</code> for update a product </li>
+<li> GET <code>http://localhost:7777/marketshop/product/search/</code> for search a product </li>
+<li> GET <code>http://localhost:7777/marketshop/report/total-report/</code> for get total report </li>
+<li> GET <code>http://localhost:7777/marketshop/report/by-date/</code> for get report by date </li>
+<li> GET <code>http://localhost:7777/marketshop/sale/</code> for get all sales </li>
+<li> GET <code>http://localhost:7777/marketshop/sale/date/</code> for get sales by date </li>
+<li> POST <code>http://localhost:7777/marketshop/sale/</code> for save sale </li>
+<li> Swagger url: <code>http://localhost:7777/marketshop/swagger-ui.html#/</code> </li>
 </ul>
