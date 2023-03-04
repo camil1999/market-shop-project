@@ -25,7 +25,7 @@
 
 <h1>Endpoint</h1>
 <ul>
-<li> Main url-http://localhost:7777/marketshop </li>
+<li> Main url <code>http://localhost:7777/marketshop </code></li>
 <li> POST <code>http://localhost:7777/marketshop/user/login</code> for login users </li>
 <li> POST <code>http://localhost:7777/marketshop/user/signUp</code> for registration </li>
 <li> GET <code>http://localhost:7777/marketshop/user/</code> for get all users </li>
