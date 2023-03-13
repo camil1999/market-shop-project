@@ -8,14 +8,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import az.marketshopjamil.MarketShopJamil.config.MySession;
 
 @Controller
-public class AdminController {
+public class HomeController {
 
 	@Autowired
 	private MySession mySession;
 
-	@GetMapping(path = "/admin")
-	public String showAdminPage(Model model) {
+	@GetMapping(path = { "/home", "/" })
+	public String showHomePage(Model model) {
+		String username = mySession.getUsername();
+		if (username.equals("anonymousUser")) {
 
-		return "admin";
+		} else {
+			model.addAttribute("username", username);
+		}
+		return "home";
 	}
 }

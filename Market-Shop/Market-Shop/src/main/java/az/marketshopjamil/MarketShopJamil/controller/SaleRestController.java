@@ -6,47 +6,49 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
-import az.marketshopjamil.MarketShopJamil.request.RequestCashier;
-import az.marketshopjamil.MarketShopJamil.response.ResponseCashier;
-import az.marketshopjamil.MarketShopJamil.service.CashierService;
+import az.marketshopjamil.MarketShopJamil.request.RequestSale;
+import az.marketshopjamil.MarketShopJamil.response.ResponseSale;
+import az.marketshopjamil.MarketShopJamil.service.SaleService;
 
 @RestController
-@RequestMapping(path = "/cashier")
+@RequestMapping(path = "/rest/sale")
 @CrossOrigin(origins = "*")
-public class CashierController {
+public class SaleRestController {
 
 	@Autowired
-	private CashierService cashierService;
+	private SaleService saleService;
 
 	@GetMapping
 	@PreAuthorize(value = "hasAuthority('Admin')")
-	public MappingJacksonValue findAllCashier() {
-		List<ResponseCashier> cashiers = cashierService.findAllCashier();
-		return filter(cashiers, "cashier", "id", "name", "surname", "email", "phone");
-
+	public MappingJacksonValue getAllSale() {
+		List<ResponseSale> findAll = saleService.getAllSale();
+		return filter(findAll, "sale", "id", "productName", "price", "cost", "quantity", "soldDate", "cashierName",
+				"totalPrice", "profit");
 	}
 
-	@PutMapping(path = "/{id}")
-	public void editCashier(@PathVariable Integer id, @RequestBody RequestCashier requestCashier) {
-		cashierService.editCashier(id, requestCashier);
-	}
-
-	@DeleteMapping(path = "/{id}")
+	@GetMapping(path = "/date")
 	@PreAuthorize(value = "hasAuthority('Admin')")
-	public void deleteById(@PathVariable Integer id) {
-		cashierService.deleteById(id);
+	public MappingJacksonValue getAllSaleByDate(@RequestParam String from, @RequestParam String to) {
+		List<ResponseSale> findAllByDate = saleService.getAllSaleByDate(from, to);
+		return filter(findAllByDate, "sale", "id", "productName", "price", "quantity", "soldDate", "cashierName",
+				"totalPrice", "profit");
+	}
+
+	@PostMapping
+	public void createSale(@RequestBody RequestSale requestSale) {
+		saleService.createSale(requestSale);
+
 	}
 
 	public MappingJacksonValue filter(Object data, String dto, String... fields) {
@@ -56,5 +58,4 @@ public class CashierController {
 		value.setFilters(provider);
 		return value;
 	}
-
 }

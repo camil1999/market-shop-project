@@ -1,63 +1,56 @@
 package az.marketshopjamil.MarketShopJamil.controller;
 
-import java.util.List;
-
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.converter.json.MappingJacksonValue;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.databind.ser.FilterProvider;
-import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
-import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+import az.marketshopjamil.MarketShopJamil.model.User;
+import az.marketshopjamil.MarketShopJamil.repository.UserDAO;
 
-import az.marketshopjamil.MarketShopJamil.exception.MyValidationException;
-import az.marketshopjamil.MarketShopJamil.request.RequestUser;
-import az.marketshopjamil.MarketShopJamil.response.ResponseUser;
-import az.marketshopjamil.MarketShopJamil.service.UserService;
 
-@RestController
-@RequestMapping(path = "/user")
-@CrossOrigin(origins = "*")
+
+@Controller
 public class UserController {
-
+	private boolean createUser = false;
+	
 	@Autowired
-	private UserService userService;
+	private UserDAO userDAO;
 
-	@PostMapping(path = "/signUp")
-	@PreAuthorize(value = "hasAuthority('Admin')")
-	public void saveUser(@Valid @RequestBody RequestUser requestUser, BindingResult result) {
-		if (result.hasErrors()) {
-			throw new MyValidationException(result);
+	@GetMapping(path = "/show-login")
+	public String showLoginPage(Model model,HttpServletRequest request) {
+		if (createUser) {
+			model.addAttribute("userCreated", "");
+			createUser=false;
 		}
-		userService.saveUser(requestUser);
+		request.getSession().invalidate();
+		return "my-custom-login";
 	}
 
-	@GetMapping
-	@PreAuthorize(value = "hasAuthority('Admin')")
-	public MappingJacksonValue findAllUser() {
-		List<ResponseUser> users = userService.findAllUser();
-		return filter(users, "user", "username", "password", "enabled", "type");
+	@GetMapping(path = "/create-account")
+	public String showSignUpPage(Model model) {
+		User user = new User();
+		model.addAttribute("user", user);
+		return "create-account";
 	}
 
-	public MappingJacksonValue filter(Object data, String dto, String... fields) {
-		SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.filterOutAllExcept(fields);
-		FilterProvider provider = new SimpleFilterProvider().addFilter(dto, filter);
-		MappingJacksonValue value = new MappingJacksonValue(data);
-		value.setFilters(provider);
-		return value;
-	}
-
-	@PostMapping(path = "/login")
-	public void login() {
-
+	@PostMapping(path = "/create-account-process")
+	public String saveBook(@Valid @ModelAttribute(name = "user") User user, BindingResult result, Model model) {
+		if (result.hasErrors()) {
+			return "create-account";
+		}
+		boolean userExists=userDAO.createUser(user);
+		if(userExists) {
+			model.addAttribute("userExists","");
+			return "create-account";
+		}
+		createUser = true;
+		return "redirect:/show-login";
 	}
 }

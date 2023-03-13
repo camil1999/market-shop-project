@@ -2,53 +2,50 @@ package az.marketshopjamil.MarketShopJamil.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
-import az.marketshopjamil.MarketShopJamil.request.RequestSale;
-import az.marketshopjamil.MarketShopJamil.response.ResponseSale;
-import az.marketshopjamil.MarketShopJamil.service.SaleService;
+import az.marketshopjamil.MarketShopJamil.exception.MyValidationException;
+import az.marketshopjamil.MarketShopJamil.request.RequestUser;
+import az.marketshopjamil.MarketShopJamil.response.ResponseUser;
+import az.marketshopjamil.MarketShopJamil.service.UserService;
 
 @RestController
-@RequestMapping(path = "/sale")
+@RequestMapping(path = "/rest/user")
 @CrossOrigin(origins = "*")
-public class SaleController {
+public class UserRestController {
 
 	@Autowired
-	private SaleService saleService;
+	private UserService userService;
+
+	@PostMapping(path = "/signUp")
+	@PreAuthorize(value = "hasAuthority('Admin')")
+	public void saveUser(@Valid @RequestBody RequestUser requestUser, BindingResult result) {
+		if (result.hasErrors()) {
+			throw new MyValidationException(result);
+		}
+		userService.saveUser(requestUser);
+	}
 
 	@GetMapping
 	@PreAuthorize(value = "hasAuthority('Admin')")
-	public MappingJacksonValue getAllSale() {
-		List<ResponseSale> findAll = saleService.getAllSale();
-		return filter(findAll, "sale", "id", "productName", "price", "cost", "quantity", "soldDate", "cashierName",
-				"totalPrice", "profit");
-	}
-
-	@GetMapping(path = "/date")
-	@PreAuthorize(value = "hasAuthority('Admin')")
-	public MappingJacksonValue getAllSaleByDate(@RequestParam String from, @RequestParam String to) {
-		List<ResponseSale> findAllByDate = saleService.getAllSaleByDate(from, to);
-		return filter(findAllByDate, "sale", "id", "productName", "price", "quantity", "soldDate", "cashierName",
-				"totalPrice", "profit");
-	}
-
-	@PostMapping
-	public void createSale(@RequestBody RequestSale requestSale) {
-		saleService.createSale(requestSale);
-
+	public MappingJacksonValue findAllUser() {
+		List<ResponseUser> users = userService.findAllUser();
+		return filter(users, "user", "username", "password", "enabled", "type");
 	}
 
 	public MappingJacksonValue filter(Object data, String dto, String... fields) {
@@ -57,5 +54,10 @@ public class SaleController {
 		MappingJacksonValue value = new MappingJacksonValue(data);
 		value.setFilters(provider);
 		return value;
+	}
+
+	@PostMapping(path = "/login")
+	public void login() {
+
 	}
 }

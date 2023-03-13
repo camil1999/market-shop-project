@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Yeni hesab yaratmaq</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<style>
+.error-message {
+	color: red;
+}
+</style>
+</head>
+<body>
+
+	
+
+	<h1 style="text-align: center;">Yeni hesab yaratmaq</h1>
+
+	<div style="width: 300px; margin: auto;">
+		<form th:action="@{/create-account-process}" method="POST"
+			class="form" th:object="${user}">
+			<div th:if="${userExists}"
+				class="alert alert-danger alert-dismissible">
+				<button type="button" class="close" data-dismiss="alert">&times;</button>
+				İstifadəçi artıq mövcuddur!
+
+			</div>
+
+			<div class="form-group">
+				<label for="username"> İstifadəçi adı</label> <input
+					class="form-control" type="text" id="username" name="username"
+					placeholder="İstifadəçi adı" th:field="*{username}" /> <span
+					class="error-message" th:if="${#fields.hasErrors ('username')}"
+					th:errors="*{username}"></span>
+			</div>
+			<div class="form-group">
+				<label for="password">Şifrə</label> <input class="form-control"
+					type="password" id="password" name="password" placeholder="Şifrə"
+					th:field="*{password}" /> <span class="error-message"
+					th:if="${#fields.hasErrors ('password')}" th:errors="*{password}"></span>
+			</div>
+			<button class="btn btn-primary" type="submit">Hesab yarat</button>
+			<a class="btn btn-success" th:href="@{/show-login}"> Giriş </a>
+		</form>
+	</div>
+
+
+
+</body>
+</html>
