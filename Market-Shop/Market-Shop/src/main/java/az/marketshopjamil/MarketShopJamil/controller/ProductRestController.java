@@ -24,6 +24,7 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
 import az.marketshopjamil.MarketShopJamil.exception.MyValidationException;
+import az.marketshopjamil.MarketShopJamil.model.SearchModel;
 import az.marketshopjamil.MarketShopJamil.request.RequestProduct;
 import az.marketshopjamil.MarketShopJamil.response.ResponseProduct;
 import az.marketshopjamil.MarketShopJamil.service.ProductService;
@@ -90,14 +91,10 @@ public class ProductRestController {
 		productService.editProduct(id, requestProduct);
 	}
 
-	@GetMapping(path = "/search")
+	@PostMapping(path = "/search")
 	@PreAuthorize(value = "hasAuthority('Admin')")
-	public MappingJacksonValue findSearch(@RequestParam(required = false) String name,
-			@RequestParam(required = false) String barcode, @RequestParam(required = false) Double price,
-			@RequestParam(required = false) Double cost, @RequestParam(required = false) String description,
-			@RequestParam(required = false) Double quantity) {
-		List<ResponseProduct> searchProducts = productService.findSearch(name, barcode, price, cost, description,
-				quantity);
+	public MappingJacksonValue findSearch(@RequestBody SearchModel search) {			
+		List<ResponseProduct> searchProducts = productService.findSearch(search);
 
 		return filter(searchProducts, "product", "id", "name", "barcode", "price", "cost", "description",
 				"registerDate", "updateDate", "quantity", "percent");

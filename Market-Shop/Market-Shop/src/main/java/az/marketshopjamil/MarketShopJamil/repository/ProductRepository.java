@@ -13,13 +13,12 @@ import az.marketshopjamil.MarketShopJamil.model.Product;
 @Transactional
 public interface ProductRepository extends JpaRepository<Product, Integer> {
 
-	@Query(value = "select * from products where name like %?1% or barcode like %?2 or price like %?3 or cost like %?4 or description like %?5 or quantity like %?6", nativeQuery = true)
+	@Query(value = "select * from products where name like %?1% or barcode like %?1% or price like %?1% or cost like %?1% or description like %?1% or quantity like %?1%", nativeQuery = true)
 	@Modifying
-	List<Product> searchProducts(String name, String barcode, Double price, Double cost, String description,
-			Double quantity);
+	List<Product> searchProducts(String search);
 
 	public Product findByBarcode(String barcode);
+
 	public Product findByName(String name);
-	
-	
+
 }
