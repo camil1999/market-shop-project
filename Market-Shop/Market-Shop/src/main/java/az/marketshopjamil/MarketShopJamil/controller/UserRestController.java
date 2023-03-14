@@ -25,7 +25,7 @@ import az.marketshopjamil.MarketShopJamil.response.ResponseUser;
 import az.marketshopjamil.MarketShopJamil.service.UserService;
 
 @RestController
-@RequestMapping(path = "/rest/user")
+@RequestMapping(path = "/user")
 @CrossOrigin(origins = "*")
 public class UserRestController {
 

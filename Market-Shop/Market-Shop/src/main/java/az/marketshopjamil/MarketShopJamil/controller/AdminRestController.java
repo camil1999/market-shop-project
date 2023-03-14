@@ -24,7 +24,7 @@ import az.marketshopjamil.MarketShopJamil.response.ResponseAdmin;
 import az.marketshopjamil.MarketShopJamil.service.AdminService;
 
 @RestController
-@RequestMapping(path = "/rest/admin")
+@RequestMapping(path = "/admin")
 @CrossOrigin(origins = "*")
 public class AdminRestController {
 

@@ -37,7 +37,7 @@ public class ProductRestController {
 	private ProductService productService;
 
 	@GetMapping
-	@PreAuthorize(value = "hasAuthority('Admin')")
+	//@PreAuthorize(value = "hasAuthority('Admin')")
 	public MappingJacksonValue findAllProduct() {
 		List<ResponseProduct> products = productService.findAllProduct();
 		return filter(products, "product", "name", "barcode", "price", "cost", "description", "registerDate",
@@ -52,7 +52,7 @@ public class ProductRestController {
 	}
 
 	@PostMapping
-	@PreAuthorize(value = "hasAuthority('Admin')")
+	//@PreAuthorize(value = "hasAuthority('Admin')")
 	public void saveProduct(@Valid @RequestBody RequestProduct requestProduct, BindingResult result) {
 		if (result.hasErrors()) {
 			throw new MyValidationException(result);
