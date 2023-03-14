@@ -41,6 +41,14 @@ public class ProductService {
 		}
 		return products;
 	}
+	public List<ResponseProduct> findAllIncomingProduct() {
+		List<ResponseProduct> products = incomingProductRepository.findAll().stream()
+				.map(product -> convertRespIncProduct(product)).collect(Collectors.toList());
+		if (products.isEmpty()) {
+			throw new NotFoundException("Məhsul tapılmadı!");
+		}
+		return products;
+	}
 
 	public ResponseProduct getProductByBarcode(String barcode) {
 		Product product = productRepository.findByBarcode(barcode);
@@ -71,7 +79,7 @@ public class ProductService {
 
 	}
 
-	public void saveExistingProduct(RequestProduct requestProduct) {
+	public void saveIncomingProduct(RequestProduct requestProduct) {
 		Product existingProduct = productRepository.findByName(requestProduct.getName());
 		if (existingProduct == null) {
 			throw new NotFoundException("Məhsul tapılmadı! " + requestProduct.getName());
@@ -126,6 +134,11 @@ public class ProductService {
 	private ResponseProduct convertRespProduct(Product product) {
 		ResponseProduct responseProduct = new ResponseProduct();
 		mapper.map(product, responseProduct);
+		return responseProduct;
+	}
+	private ResponseProduct convertRespIncProduct(IncomingProduct incomingProduct) {
+		ResponseProduct responseProduct = new ResponseProduct();
+		mapper.map(incomingProduct, responseProduct);
 		return responseProduct;
 	}
 
