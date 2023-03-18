@@ -46,7 +46,7 @@ public class SaleRestController {
 	}
 
 	@PostMapping
-	public void createSale(@RequestBody RequestSale requestSale) {
+	public void createSale(@RequestBody List<RequestSale> requestSale) {
 		saleService.createSale(requestSale);
 
 	}

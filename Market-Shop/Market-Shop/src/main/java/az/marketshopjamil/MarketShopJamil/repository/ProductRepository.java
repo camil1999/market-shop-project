@@ -20,5 +20,5 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	public Product findByBarcode(String barcode);
 
 	public Product findByName(String name);
-
+	 List<Product> findByBarcodeIn(List<String> barcodes);
 }

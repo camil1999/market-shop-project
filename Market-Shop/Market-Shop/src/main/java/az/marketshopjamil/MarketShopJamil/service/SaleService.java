@@ -11,6 +11,6 @@ public interface SaleService {
 
 	public List<ResponseSale> getAllSaleByDate(String from, String to);
 
-	public void createSale(RequestSale requestSale);
+	public void createSale(List<RequestSale> requestSale);
 
 }
